@@ -13,7 +13,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import xyz.jadonfowler.aether.IslandGenerator;
+import xyz.jadonfowler.aether.gen.IslandGenerator;
+import xyz.jadonfowler.aether.listener.WorldListener;
 
 @SuppressWarnings("deprecation")
 public class Aether extends JavaPlugin implements Listener {
@@ -24,6 +25,7 @@ public class Aether extends JavaPlugin implements Listener {
 		gen.generator(new IslandGenerator(140, .1, 3457, true));
 		Bukkit.createWorld(gen);
 		Bukkit.getPluginManager().registerEvents(this, this);
+		Bukkit.getPluginManager().registerEvents(this, new WorldListener());
 	}
 
 	public static void log(String string) {
@@ -40,40 +42,6 @@ public class Aether extends JavaPlugin implements Listener {
 			e.getPlayer()
 					.teleport(Bukkit.getWorld("aether").getSpawnLocation());
 			e.setCancelled(true);
-		}
-	}
-
-	@EventHandler
-	public void EatCoal(PlayerInteractEvent e) {
-		Player p = e.getPlayer();
-		if (isInAether(p)) {
-			if (p.getFoodLevel() > 19)
-				return;
-			if (p.getItemInHand().getType() == Material.COAL) {
-				if (p.getItemInHand().getAmount() > 2)
-					p.getItemInHand().setAmount(
-							p.getItemInHand().getAmount() - 1);
-				else
-					p.getItemInHand().setType(Material.AIR);
-				p.getWorld().playSound(p.getLocation(), Sound.BURP, 3, 1);
-				p.setFoodLevel(p.getFoodLevel() + 5);
-			}
-		}
-	}
-
-	@EventHandler
-	public void MineZanite(BlockBreakEvent e) {
-		Player p = e.getPlayer();
-		if (isInAether(p)) {
-			if (e.getBlock().getType() == Material.IRON_ORE) {
-				e.setCancelled(true);
-				e.getBlock().setType(Material.AIR);
-				e.getBlock()
-						.getLocation()
-						.getWorld()
-						.dropItemNaturally(e.getBlock().getLocation(),
-								new ItemStack(Material.IRON_INGOT, 1));
-			}
 		}
 	}
 
