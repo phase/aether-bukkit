@@ -1,4 +1,4 @@
-package five.aether.main;
+package xyz.jadonfowler.aether;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -13,7 +13,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import five.aether.main.gen.IslandGenerator;
+import xyz.jadonfowler.aether.IslandGenerator;
 
 @SuppressWarnings("deprecation")
 public class Aether extends JavaPlugin implements Listener {
@@ -27,7 +27,7 @@ public class Aether extends JavaPlugin implements Listener {
 	}
 
 	public static void log(String string) {
-		System.out.println("FifthDimension >> Aether >> " + string);
+		System.out.println("Aether >> " + string);
 	}
 
 	public static boolean isInAether(Player p) {

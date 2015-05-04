@@ -1,4 +1,4 @@
-package five.aether.main.gen;
+package xyz.jadonfowler.aether.gen;
 
 import java.util.Random;
 

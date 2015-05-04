@@ -1,4 +1,5 @@
 name: Aether
-main: five.aether.main.Aether
+main: xyz.jadonfowler.aether.Aether
 version: 1.0
-description: Aether mod in BUKKIT!
+description: A plugin of the Aether mod.
+author: http://jadonfowler.xyz
