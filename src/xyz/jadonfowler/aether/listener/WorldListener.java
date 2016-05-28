@@ -1,12 +1,17 @@
 package xyz.jadonfowler.aether.listener;
 
-import org.bukkit.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.event.block.*;
-import org.bukkit.event.player.*;
-import org.bukkit.inventory.*;
-import xyz.jadonfowler.aether.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.inventory.ItemStack;
+import xyz.jadonfowler.aether.Aether;
 
 public class WorldListener implements Listener {
 
@@ -23,12 +28,12 @@ public class WorldListener implements Listener {
         Player p = e.getPlayer();
         if (Aether.isInAether(p)) {
             if (p.getFoodLevel() > 19) return;
-            if (p.getItemInHand().getType() == Material.COAL) {
-                ItemStack hand = p.getItemInHand();
-                if (p.getItemInHand().getAmount() > 1)
-                    p.setItemInHand(new ItemStack(hand.getType(), hand.getAmount() - 1));
-                else p.setItemInHand(new ItemStack(Material.AIR, 1));
-                p.getWorld().playSound(p.getLocation(), Sound.BURP, 3, 1);
+            ItemStack hand = p.getInventory().getItemInMainHand();
+            if (hand.getType() == Material.COAL) {
+                if (hand.getAmount() > 1)
+                    p.getInventory().setItemInMainHand(new ItemStack(hand.getType(), hand.getAmount() - 1));
+                else p.getInventory().setItemInMainHand(new ItemStack(Material.AIR, 1));
+                p.getWorld().playSound(p.getLocation(), Sound.ENTITY_CHICKEN_EGG, 3, 1);
                 p.setFoodLevel(p.getFoodLevel() + 5);
             }
         }

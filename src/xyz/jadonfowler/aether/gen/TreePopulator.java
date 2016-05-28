@@ -1,9 +1,14 @@
 package xyz.jadonfowler.aether.gen;
 
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.block.*;
-import org.bukkit.generator.*;
+import java.util.Random;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.TreeType;
+import org.bukkit.World;
+import org.bukkit.block.Biome;
+import org.bukkit.block.Block;
+import org.bukkit.generator.BlockPopulator;
 
 public class TreePopulator extends BlockPopulator {
 
@@ -22,7 +27,7 @@ public class TreePopulator extends BlockPopulator {
         int x = this.random.nextInt(16) + chunk.getX() * 16;
         int z = this.random.nextInt(16) + chunk.getZ() * 16;
         Location loc = new Location(world, x, world.getHighestBlockYAt(x, z), z);
-        if (loc.getY() <= 1.0D) { return; }
+        if (loc.getY() <= 1.0D || loc.getBlock().getType() != Material.GRASS) { return; }
         TreeType[] types = { TreeType.TREE, TreeType.BIRCH, TreeType.BIG_TREE, TreeType.TALL_REDWOOD };
         double chance = 0.7D;
         for (TreeType type : types) {

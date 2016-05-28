@@ -1,14 +1,16 @@
 package xyz.jadonfowler.aether;
 
-import org.bukkit.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.event.player.*;
-import org.bukkit.plugin.java.*;
-import xyz.jadonfowler.aether.gen.*;
-import xyz.jadonfowler.aether.listener.*;
+import org.bukkit.Bukkit;
+import org.bukkit.WorldCreator;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
+import org.bukkit.plugin.java.JavaPlugin;
+import xyz.jadonfowler.aether.gen.IslandGenerator;
+import xyz.jadonfowler.aether.listener.WorldListener;
 
-@SuppressWarnings("deprecation") public class Aether extends JavaPlugin implements Listener {
+public class Aether extends JavaPlugin implements Listener {
 
     @Override public void onEnable() {
         WorldCreator gen = new WorldCreator("aether");
@@ -18,18 +20,35 @@ import xyz.jadonfowler.aether.listener.*;
         Bukkit.getPluginManager().registerEvents(new WorldListener(), this);
     }
 
-    public static void log(String string) {
-        System.out.println("Aether >> " + string);
-    }
-
     public static boolean isInAether(Player p) {
         return p.getWorld().getName().equalsIgnoreCase("aether");
     }
 
-    @EventHandler public void j(PlayerChatEvent e) {
-        if (e.getMessage().startsWith("!aether")) {
-            e.getPlayer().teleport(Bukkit.getWorld("aether").getSpawnLocation());
-            e.setCancelled(true);
+    @Override public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
+        if (command.toString().equalsIgnoreCase("aether")) {
+            if (args[0].equalsIgnoreCase("join")) {
+                if (sender instanceof Player) {
+                    Player p = (Player) sender;
+                    if (!isInAether(p))
+                        p.teleport(Bukkit.getWorld("aether").getSpawnLocation());
+                    else Messenger.sendMessage(p, "You are already in the Aether.");
+                }
+                else {
+                    Messenger.sendMessage(sender, "Only Players can join the Aether.");
+                }
+            }
+            else if (args[0].equalsIgnoreCase("leave")) {
+                if (sender instanceof Player) {
+                    Player p = (Player) sender;
+                    if (isInAether(p))
+                        p.teleport(Bukkit.getWorlds().get(0).getSpawnLocation());
+                    else Messenger.sendMessage(p, "You are not in the Aether.");
+                }
+                else {
+                    Messenger.sendMessage(sender, "Only Players can leave the Aether.");
+                }
+            }
         }
+        return false;
     }
 }

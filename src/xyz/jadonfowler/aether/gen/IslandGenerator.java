@@ -1,9 +1,15 @@
 package xyz.jadonfowler.aether.gen;
 
-import java.util.*;
-import org.bukkit.*;
-import org.bukkit.generator.*;
-import org.bukkit.util.noise.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.World;
+import org.bukkit.generator.BlockPopulator;
+import org.bukkit.generator.ChunkGenerator;
+import org.bukkit.util.noise.PerlinOctaveGenerator;
+import org.bukkit.util.noise.SimplexOctaveGenerator;
 
 public class IslandGenerator extends ChunkGenerator {
 

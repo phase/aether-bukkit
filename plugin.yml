@@ -1,5 +1,8 @@
 name: Aether
 main: xyz.jadonfowler.aether.Aether
 version: 1.0
-description: A plugin of the Aether mod.
+description: The Aether mod in a plugin.
 author: http://jadonfowler.xyz
+commands:
+   aether:
+      description: The main command for the Aether.
